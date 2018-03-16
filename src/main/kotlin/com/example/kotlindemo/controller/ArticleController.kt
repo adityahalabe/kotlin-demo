@@ -2,6 +2,7 @@ package com.example.kotlindemo.controller
 
 import com.example.kotlindemo.model.Article
 import com.example.kotlindemo.services.ArticleService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -10,17 +11,13 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api")
-class ArticleController(private val articleService: ArticleService) {
+class ArticleController(@Autowired private val articleService: ArticleService) {
 
     @GetMapping("/articles")
-    fun getAllArticles(): List<Article> =
-            articleService.getAllArticles()
-
+    fun getAllArticles(): List<Article> = articleService.getAllArticles()
 
     @PostMapping("/articles")
-    fun createNewArticle(@Valid @RequestBody article: Article): Article =
-            articleService.save(article)
-
+    fun createNewArticle(@Valid @RequestBody article: Article): Article = articleService.save(article)
 
     @GetMapping("/articles/{id}")
     fun getArticleById(@PathVariable(value = "id") articleId: Int): ResponseEntity<Article> {

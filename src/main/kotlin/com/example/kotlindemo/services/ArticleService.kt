@@ -2,9 +2,10 @@ package com.example.kotlindemo.services
 
 import com.example.kotlindemo.model.Article
 import com.example.kotlindemo.repository.ArticleRepository
-import org.springframework.http.ResponseEntity
+import org.springframework.stereotype.Service
 import java.util.*
 
+@Service
 class ArticleService(private val articleRepository: ArticleRepository) {
 
     fun getAllArticles(): List<Article> = articleRepository.findAll()
