@@ -16,11 +16,11 @@ class ArticleController(@Autowired private val articleService: ArticleService) {
     @GetMapping("/articles")
     fun getAllArticles(): List<Article> = articleService.getAllArticles()
 
-    @PostMapping("/articles")
-    fun createNewArticle(@Valid @RequestBody article: Article): Article = articleService.save(article)
+    @PostMapping("/article/save")
+    fun createNewArticle(@ModelAttribute article: Article): Article = articleService.save(article)
 
-    @GetMapping("/articles/{id}")
-    fun getArticleById(@PathVariable(value = "id") articleId: Int): ResponseEntity<Article> {
+    @GetMapping("/articles/search")
+    fun getArticleById(@RequestParam("id") articleId: Int): ResponseEntity<Article> {
         return articleService.getArticleById(articleId).map { article ->
             ResponseEntity.ok(article)
         }.orElse(ResponseEntity.notFound().build())
@@ -36,8 +36,8 @@ class ArticleController(@Autowired private val articleService: ArticleService) {
         }.orElse(ResponseEntity.notFound().build())
     }
 
-    @DeleteMapping("/articles/{id}")
-    fun deleteArticleById(@PathVariable(value = "id") articleId: Int): ResponseEntity<Void> {
+    @DeleteMapping("/articles/delete")
+    fun deleteArticleById(@RequestParam(  "id") articleId: Int): ResponseEntity<Void> {
 
         return articleService.deleteArticleById(articleId).map { _  ->
             ResponseEntity<Void>(HttpStatus.OK)
